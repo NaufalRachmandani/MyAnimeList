@@ -2,8 +2,7 @@
 <resources>
     <style name="Theme.App.Starting" parent="Theme.SplashScreen" >
         <item name="windowSplashScreenBackground">#2E51A2</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/logo</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/mal_logo</item>
         <item name="postSplashScreenTheme">@style/Theme.MyAnimeList</item>
-        <item name="splashScreenIconSize">80dp</item>
     </style>
 </resources>
