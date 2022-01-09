@@ -17,9 +17,22 @@ class AnimeRepositoryImpl @Inject constructor(private val myAnimeListApi: MyAnim
     override suspend fun getAnimeTop(): Flow<Resource<List<Anime>>> = flow {
         try {
             emit(Resource.Loading())
-            val animeList: List<Anime> =
-                myAnimeListApi.getAnimeTop().data?.map { it.toAnime() } ?: mutableListOf()
-            emit(Resource.Success(data = animeList))
+
+            val mutableAnimeList = mutableListOf<Anime>()
+            val response = myAnimeListApi.getAnimeTop(1)
+            mutableAnimeList.addAll( response.data?.map { it.toAnime() } ?: mutableListOf())
+            emit(Resource.Success(data = mutableAnimeList.toList()))
+
+            var page = 1
+            var hasNextPage = response.paginationDto?.hasNextPage ?: false
+            while (hasNextPage && page < 10) {
+                kotlinx.coroutines.delay(3000)
+                page++
+                val temp = myAnimeListApi.getAnimeTop(page)
+                mutableAnimeList.addAll( temp.data?.map { it.toAnime() } ?: mutableListOf())
+                hasNextPage = temp.paginationDto?.hasNextPage ?: false
+                emit(Resource.Success(data = mutableAnimeList.toList()))
+            }
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occured"))
         } catch (e: IOException) {
@@ -31,7 +44,7 @@ class AnimeRepositoryImpl @Inject constructor(private val myAnimeListApi: MyAnim
         try {
             emit(Resource.Loading())
             val animeList: List<Anime> =
-                myAnimeListApi.getAnimeTop().data?.map { it.toAnime() } ?: mutableListOf()
+                myAnimeListApi.getAnimeSearch(q, type).data?.map { it.toAnime() } ?: mutableListOf()
             emit(Resource.Success(data = animeList))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occured"))

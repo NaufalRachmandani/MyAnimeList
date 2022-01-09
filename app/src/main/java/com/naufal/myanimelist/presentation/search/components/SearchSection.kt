@@ -1,4 +1,4 @@
-package com.naufal.myanimelist.presentation.home.components
+package com.naufal.myanimelist.presentation.search.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
