@@ -4,6 +4,7 @@ import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.naufal.myanimelist.R
@@ -56,4 +57,36 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 10.sp
     )
+)
+
+val animeTitleTextStyle = TextStyle(
+    color = Primary,
+    fontSize = 14.sp,
+    fontWeight = FontWeight.Bold,
+    fontStyle = FontStyle.Normal,
+    fontFamily = rubik
+)
+
+val animeStatTextStyle = TextStyle(
+    color = SofterTextColor,
+    fontSize = 10.sp,
+    fontWeight = FontWeight.Normal,
+    fontStyle = FontStyle.Normal,
+    fontFamily = rubik
+)
+
+val baseTextStyle = TextStyle(
+    color = TextColor,
+    fontSize = 12.sp,
+    fontWeight = FontWeight.Normal,
+    fontStyle = FontStyle.Normal,
+    fontFamily = rubik
+)
+
+val toolbarTextStyle = TextStyle(
+    color = TextColor,
+    fontSize = 14.sp,
+    fontWeight = FontWeight.SemiBold,
+    fontStyle = FontStyle.Normal,
+    fontFamily = rubik
 )
