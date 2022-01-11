@@ -9,9 +9,13 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.naufal.core.domain.model.anime_list.Anime
+import com.naufal.myanimelist.presentation.anime_detail.AnimeDetailScreen
 import com.naufal.myanimelist.presentation.home.HomeScreen
 import com.naufal.myanimelist.ui.theme.MyAnimeListTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,16 +40,18 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screen.AnimeListScreen.route) {
                             HomeScreen(navController)
                         }
-//                        composable(
-//                            route = Screen.CoinDetailScreen.route + "/{coinId}",
-//                            arguments = listOf(
-//                                navArgument("coinId") {
-//                                    type = NavType.StringType
-//                                }
-//                            )
-//                        ) {
-//                            CoinDetailScreen(coinId = it.arguments?.getString("coinId"))
-//                        }
+                        composable(
+                            route = Screen.AnimeDetailScreen.route + "/{anime}",
+                            arguments = listOf(
+                                navArgument("anime") {
+                                    type = NavType.ParcelableType(Anime::class.java)
+                                }
+                            )
+                        ) {
+                            AnimeDetailScreen(navController = navController, anime = navController.previousBackStackEntry
+                                ?.arguments?.getParcelable("anime") ?: Anime()
+                            )
+                        }
                     }
                 }
             }

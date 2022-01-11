@@ -19,7 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.naufal.core.domain.model.Anime
+import com.naufal.core.domain.model.anime_list.Anime
 import com.naufal.myanimelist.R
 import com.naufal.myanimelist.ui.theme.*
 import com.skydoves.landscapist.ShimmerParams
@@ -35,15 +35,19 @@ fun AnimeList(list: List<Anime>, onAnimeItemClick: (Anime) -> Unit) {
         contentPadding = PaddingValues(top = 8.dp)
     ) {
         items(list.size) { index ->
-            AnimeItem(list[index]) {
+            AnimeItem(list[index], onItemClick = {
                 onAnimeItemClick(it)
-            }
+            })
         }
     }
 }
 
 @Composable
-fun AnimeItem(anime: Anime, onItemClick: (Anime) -> Unit) {
+fun AnimeItem(
+    anime: Anime = Anime(),
+    onItemClick: (Anime) -> Unit,
+    isPreview: Boolean = false
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -58,24 +62,33 @@ fun AnimeItem(anime: Anime, onItemClick: (Anime) -> Unit) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
         ) {
-            GlideImage(
-                imageModel = anime.images?.jpg?.imageUrl,
-                modifier = Modifier
-                    .width(50.dp)
-                    .height(70.dp),
-                shimmerParams = ShimmerParams(
-                    baseColor = Color.White,
-                    highlightColor = HintTextColor,
-                    durationMillis = 350,
-                    dropOff = 0.65f,
-                    tilt = 20f
-                ),
-                failure = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_baseline_error_24),
-                        contentDescription = "error"
-                    )
-                })
+            if (isPreview) {
+                Box(
+                    modifier = Modifier
+                        .width(50.dp)
+                        .height(70.dp)
+                        .background(color = Primary)
+                )
+            } else {
+                GlideImage(
+                    imageModel = anime.images?.jpg?.imageUrl,
+                    modifier = Modifier
+                        .width(50.dp)
+                        .height(70.dp),
+                    shimmerParams = ShimmerParams(
+                        baseColor = Color.White,
+                        highlightColor = HintTextColor,
+                        durationMillis = 350,
+                        dropOff = 0.65f,
+                        tilt = 20f
+                    ),
+                    failure = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_baseline_error_24),
+                            contentDescription = "error"
+                        )
+                    })
+            }
             Spacer(modifier = Modifier.width(4.dp))
             Column(
                 modifier = Modifier
@@ -91,17 +104,17 @@ fun AnimeItem(anime: Anime, onItemClick: (Anime) -> Unit) {
                 Spacer(modifier = Modifier.height(2.dp))
                 Text(
                     text = "${anime.type ?: "Unknown Type"} (${anime.episodes ?: "?"} eps)",
-                    style = animeStatTextStyle
+                    style = animeItemStatTextStyle
                 )
                 Spacer(modifier = Modifier.height(2.dp))
                 Text(
                     text = "${anime.season ?: "Unknown Season"} ${anime.year ?: "Unknown Year"}",
-                    style = animeStatTextStyle
+                    style = animeItemStatTextStyle
                 )
                 Spacer(modifier = Modifier.height(2.dp))
                 Text(
                     text = "Rank ${anime.rank ?: "Unknown Rank"}",
-                    style = animeStatTextStyle
+                    style = animeItemStatTextStyle
                 )
             }
             Spacer(modifier = Modifier.width(4.dp))
@@ -129,87 +142,14 @@ fun AnimeItem(anime: Anime, onItemClick: (Anime) -> Unit) {
 @Preview
 @Composable
 fun Preview() {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 4.dp),
-        backgroundColor = Color.White,
-        border = BorderStroke(1.dp, PrimaryLight)
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start
-        ) {
-            Box(
-                modifier = Modifier
-                    .width(50.dp)
-                    .height(70.dp)
-                    .background(color = Primary)
-            )
-            Spacer(modifier = Modifier.width(4.dp))
-            Column(
-                modifier = Modifier
-                    .weight(1f),
-                horizontalAlignment = Alignment.Start
-            ) {
-                Text(
-                    text = "${"Boruto"}: Naruto Next Generation jdfhdskj fasf af djsfksjd sdjk ",
-                    style = animeTitleTextStyle,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1
-                )
-                Spacer(modifier = Modifier.height(2.dp))
-                Text(
-                    text = "TV (64 eps)",
-                    style = animeStatTextStyle
-                )
-                Spacer(modifier = Modifier.height(2.dp))
-                Text(
-                    text = "Season and Year",
-                    style = animeStatTextStyle
-                )
-                Spacer(modifier = Modifier.height(2.dp))
-                Text(
-                    text = "Rank 20",
-                    style = animeStatTextStyle
-                )
-            }
-            Spacer(modifier = Modifier.width(4.dp))
-            Row(
-                modifier = Modifier
-                    .wrapContentSize()
-                    .padding(end = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Star,
-                    contentDescription = "star",
-                    tint = Color.Yellow
-                )
-                Spacer(modifier = Modifier.width(2.dp))
-                Text(
-                    text = "8.23",
-                    style = baseTextStyle
-                )
-            }
-        }
-    }
+    AnimeItem(
+        anime = Anime(
+            title = "Boruto Naruto Next Generation",
+            type = "TV",
+            episodes = 45,
+            season = "Winter",
+            year = 2021,
+            rank = 21,
+            score = 8.22
+        ), isPreview = true, onItemClick = {})
 }
-
-//GlideImage( // CoilImage, FrescoImage
-//imageModel = anime.images?.jpg?.imageUrl,
-//modifier = Modifier
-//.width(50.dp)
-//.height(70.dp),
-//// shows an indicator while loading an image.
-//shimmerParams = ShimmerParams(
-//baseColor = MaterialTheme.colors.background,
-//highlightColor = HintTextColor,
-//durationMillis = 350,
-//dropOff = 0.65f,
-//tilt = 20f
-//),
-//// shows an error text if fail to load an image.
-//failure = {
-//    Text(text = "image request failed.")
-//})

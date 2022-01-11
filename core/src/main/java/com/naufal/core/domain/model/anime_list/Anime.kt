@@ -1,5 +1,9 @@
-package com.naufal.core.domain.model
+package com.naufal.core.domain.model.anime_list
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Anime(
     val episodes: Int? = 0,
     val genres: List<Genre>? = listOf(),
@@ -17,4 +21,4 @@ data class Anime(
     val type: String? = "",
     val url: String? = "",
     val year: Int? = 0
-)
+): Parcelable

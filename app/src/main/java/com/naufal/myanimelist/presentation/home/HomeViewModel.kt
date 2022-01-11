@@ -2,12 +2,10 @@ package com.naufal.myanimelist.presentation.home
 
 import android.util.Log
 import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.naufal.core.common.Resource
-import com.naufal.core.domain.model.Anime
 import com.naufal.core.domain.use_case.GetAnimeTopUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

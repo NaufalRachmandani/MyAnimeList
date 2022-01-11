@@ -1,8 +1,8 @@
-package com.naufal.core.data.source.remote.model.anime_list
+package com.naufal.core.data.source.remote.model.anime_characters
 
 
 import com.google.gson.annotations.SerializedName
-import com.naufal.core.domain.model.anime_list.Images
+import com.naufal.core.domain.model.anime_characters.Images
 
 data class ImagesDto(
     @SerializedName("jpg")
@@ -10,7 +10,5 @@ data class ImagesDto(
 )
 
 fun ImagesDto.toImages(): Images {
-    return Images(
-        jpg = jpgDto?.toJpg()
-    )
+    return Images(jpgDto?.toJpg())
 }

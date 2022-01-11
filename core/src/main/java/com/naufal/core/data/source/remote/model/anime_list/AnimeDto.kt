@@ -1,8 +1,7 @@
 package com.naufal.core.data.source.remote.model.anime_list
 
 import com.google.gson.annotations.SerializedName
-import com.naufal.core.domain.model.Anime
-import com.naufal.core.domain.model.Genre
+import com.naufal.core.domain.model.anime_list.Anime
 
 data class AnimeDto(
     @SerializedName("episodes")
