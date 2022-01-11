@@ -49,15 +49,19 @@ class MainActivity : ComponentActivity() {
                             HomeScreen(navController = navController)
                         }
                         composable(
-                            route = Screen.AnimeDetailScreen.route + "/{malId}",
+                            route = Screen.AnimeDetailScreen.route + "/{malId}/{title}",
                             arguments = listOf(
                                 navArgument("malId") {
                                     type = NavType.IntType
+                                },
+                                navArgument("title") {
+                                    type = NavType.StringType
                                 }
                             )
                         ) {
                             val malId = it.arguments?.getInt("malId") ?: 0
-                            AnimeDetailScreen(navController = navController, malId = malId)
+                            val title = it.arguments?.getString("title") ?: ""
+                            AnimeDetailScreen(navController = navController, malId = malId, title = title)
                         }
                     }
                 }

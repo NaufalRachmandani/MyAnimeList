@@ -41,7 +41,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
                 onFavoriteClick = {}
             )
             AnimeList(list = state.topAnimeList) {
-                navController.navigate(Screen.AnimeDetailScreen.route + "/${it.malId}")
+                navController.navigate(Screen.AnimeDetailScreen.route + "/${it.malId}/${it.title}")
             }
         }
         if (state.error.isNotBlank()) {
