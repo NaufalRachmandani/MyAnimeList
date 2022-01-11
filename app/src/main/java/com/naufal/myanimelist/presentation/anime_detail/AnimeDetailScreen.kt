@@ -2,11 +2,9 @@ package com.naufal.myanimelist.presentation.anime_detail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,13 +23,13 @@ import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
-fun AnimeDetailScreen(navController: NavController, anime: Anime = Anime()) {
+fun AnimeDetailScreen(navController: NavController, malId: Int = 0) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
-                        text = anime.title ?: "Unknown Anime Title",
+                        text = malId.toString(),
                         color = Color.White,
                         style = toolbarTextStyle,
                         overflow = TextOverflow.Ellipsis
@@ -42,14 +40,26 @@ fun AnimeDetailScreen(navController: NavController, anime: Anime = Anime()) {
                 elevation = 12.dp,
                 actions = {
                     Icon(
+                        modifier = Modifier.padding(end = 16.dp),
                         imageVector = Icons.Default.Favorite,
                         contentDescription = "favorite",
                         tint = Color.White
                     )
+                },
+                navigationIcon = {
+                    if (navController.previousBackStackEntry != null) {
+                        IconButton(onClick = { navController.navigateUp() }) {
+                            Icon(
+                                imageVector = Icons.Filled.ArrowBack,
+                                contentDescription = "Back",
+                                tint = Color.White
+                            )
+                        }
+                    }
                 }
             )
         }, content = {
-
+            InitiateUI()
         })
 }
 

@@ -94,7 +94,7 @@ val toolbarTextStyle = TextStyle(
 
 val SynopsisTitleTextStyle = TextStyle(
     color = TextColor,
-    fontSize = 14.sp,
+    fontSize = 12.sp,
     fontWeight = FontWeight.SemiBold,
     fontStyle = FontStyle.Normal,
     fontFamily = rubik

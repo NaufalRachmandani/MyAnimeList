@@ -1,18 +1,17 @@
 package com.naufal.myanimelist.presentation.home
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -27,6 +26,7 @@ import com.naufal.myanimelist.ui.theme.PrimaryLight
 @Composable
 fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltViewModel()) {
     val state = viewModel.state.value
+    val context = LocalContext.current
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -41,19 +41,15 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
                 onFavoriteClick = {}
             )
             AnimeList(list = state.topAnimeList) {
-                navController.navigate(Screen.AnimeDetailScreen.route + "/${it}")
+                navController.navigate(Screen.AnimeDetailScreen.route + "/${it.malId}")
             }
         }
         if (state.error.isNotBlank()) {
-            Text(
-                text = state.error,
-                color = MaterialTheme.colors.error,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-                    .align(Alignment.Center)
-            )
+            Toast.makeText(
+                context,
+                state.error,
+                Toast.LENGTH_SHORT
+            ).show()
         }
         if (state.isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))

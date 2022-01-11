@@ -33,12 +33,12 @@ class HomeViewModel @Inject constructor(
                     is Resource.Success -> {
                         Log.i("HomeViewModel", "getAnimeTop: success")
                         _state.value =
-                            HomeScreenState(topAnimeList = result.data ?: mutableListOf())
+                            HomeScreenState(topAnimeList = result.data ?: mutableListOf(), isLoading = false)
                     }
                     is Resource.Error -> {
                         Log.i("HomeViewModel", "getAnimeTop: error ${result.message}")
                         _state.value =
-                            HomeScreenState(error = result.message ?: "An Unexpected error occured", topAnimeList = state.value.topAnimeList)
+                            HomeScreenState(error = result.message ?: "An Unexpected error occured", topAnimeList = state.value.topAnimeList, isLoading = false)
                     }
                     is Resource.Loading -> {
                         Log.i("HomeViewModel", "getAnimeTop: loading")

@@ -1,9 +1,9 @@
 package com.naufal.myanimelist.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -14,18 +14,23 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.naufal.core.domain.model.anime_list.Anime
 import com.naufal.myanimelist.presentation.anime_detail.AnimeDetailScreen
 import com.naufal.myanimelist.presentation.home.HomeScreen
+import com.naufal.myanimelist.presentation.home.HomeViewModel
 import com.naufal.myanimelist.ui.theme.MyAnimeListTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private val viewModel by viewModels<HomeViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen().apply {
-            Log.i("MainActivity", "onCreate: install splash screen")
+            viewModel.getAnimeTop()
+            setKeepVisibleCondition {
+                viewModel.state.value.isLoading
+            }
         }
 
         setContent {
@@ -36,21 +41,23 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     val navController = rememberNavController()
-                    NavHost(navController = navController, startDestination = Screen.AnimeListScreen.route) {
+                    NavHost(
+                        navController = navController,
+                        startDestination = Screen.AnimeListScreen.route
+                    ) {
                         composable(route = Screen.AnimeListScreen.route) {
-                            HomeScreen(navController)
+                            HomeScreen(navController = navController)
                         }
                         composable(
-                            route = Screen.AnimeDetailScreen.route + "/{anime}",
+                            route = Screen.AnimeDetailScreen.route + "/{malId}",
                             arguments = listOf(
-                                navArgument("anime") {
-                                    type = NavType.ParcelableType(Anime::class.java)
+                                navArgument("malId") {
+                                    type = NavType.IntType
                                 }
                             )
                         ) {
-                            AnimeDetailScreen(navController = navController, anime = navController.previousBackStackEntry
-                                ?.arguments?.getParcelable("anime") ?: Anime()
-                            )
+                            val malId = it.arguments?.getInt("malId") ?: 0
+                            AnimeDetailScreen(navController = navController, malId = malId)
                         }
                     }
                 }
