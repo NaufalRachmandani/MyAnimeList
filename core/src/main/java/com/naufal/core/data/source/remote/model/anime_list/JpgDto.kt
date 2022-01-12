@@ -2,7 +2,7 @@ package com.naufal.core.data.source.remote.model.anime_list
 
 
 import com.google.gson.annotations.SerializedName
-import com.naufal.core.domain.model.anime_list.Jpg
+import com.naufal.core.domain.model.anime.Jpg
 
 data class JpgDto(
     @SerializedName("image_url")

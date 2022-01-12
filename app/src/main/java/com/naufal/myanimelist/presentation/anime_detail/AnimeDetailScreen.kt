@@ -20,8 +20,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.naufal.core.domain.model.anime_list.Anime
-import com.naufal.core.domain.model.anime_list.Genre
+import com.naufal.core.domain.model.anime.Anime
+import com.naufal.core.domain.model.anime.Genre
 import com.naufal.myanimelist.R
 import com.naufal.myanimelist.ui.theme.*
 import com.skydoves.landscapist.ShimmerParams

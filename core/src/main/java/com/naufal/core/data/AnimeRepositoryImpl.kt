@@ -1,19 +1,21 @@
 package com.naufal.core.data
 
 import com.naufal.core.common.Resource
+import com.naufal.core.data.source.local.AnimeDao
+import com.naufal.core.data.source.local.model.anime.AnimeEntity
 import com.naufal.core.data.source.remote.MyAnimeListApi
 import com.naufal.core.data.source.remote.model.anime_characters.toCharacterData
 import com.naufal.core.data.source.remote.model.anime_list.toAnime
 import com.naufal.core.domain.AnimeRepository
+import com.naufal.core.domain.model.anime.Anime
 import com.naufal.core.domain.model.anime_characters.CharacterData
-import com.naufal.core.domain.model.anime_list.Anime
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class AnimeRepositoryImpl @Inject constructor(private val myAnimeListApi: MyAnimeListApi) :
+class AnimeRepositoryImpl @Inject constructor(private val myAnimeListApi: MyAnimeListApi, private val animeDao: AnimeDao) :
     AnimeRepository {
 
     override suspend fun getAnimeTop(): Flow<Resource<List<Anime>>> = flow {
@@ -69,4 +71,16 @@ class AnimeRepositoryImpl @Inject constructor(private val myAnimeListApi: MyAnim
                 emit(Resource.Error("Check your internet connection"))
             }
         }
+
+    override suspend fun getAnimeFavorite(): Flow<List<AnimeEntity>> {
+        return animeDao.getAnimeList()
+    }
+
+    override suspend fun insertAnime(animeEntity: AnimeEntity) {
+        animeDao.insertAnime(animeEntity)
+    }
+
+    override suspend fun deleteAnime(animeEntity: AnimeEntity) {
+        animeDao.deleteAnime(animeEntity)
+    }
 }

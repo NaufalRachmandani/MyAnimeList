@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.naufal.core.common.Resource
-import com.naufal.core.domain.model.anime_list.Anime
+import com.naufal.core.domain.model.anime.Anime
 import com.naufal.core.domain.use_case.GetAnimeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

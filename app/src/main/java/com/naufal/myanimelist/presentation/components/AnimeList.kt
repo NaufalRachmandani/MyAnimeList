@@ -19,7 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.naufal.core.domain.model.anime_list.Anime
+import com.naufal.core.domain.model.anime.Anime
 import com.naufal.myanimelist.R
 import com.naufal.myanimelist.ui.theme.*
 import com.skydoves.landscapist.ShimmerParams

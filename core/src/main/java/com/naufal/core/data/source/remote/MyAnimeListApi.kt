@@ -1,7 +1,7 @@
 package com.naufal.core.data.source.remote
 
+import com.naufal.core.data.source.remote.model.anime.AnimeResponse
 import com.naufal.core.data.source.remote.model.anime_characters.AnimeCharactersResponse
-import com.naufal.core.data.source.remote.model.anime_detail.AnimeResponse
 import com.naufal.core.data.source.remote.model.anime_list.AnimeListResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
