@@ -14,4 +14,7 @@ interface AnimeDao {
 
     @Delete
     suspend fun deleteAnime(animeEntity: AnimeEntity)
+
+    @Query("SELECT EXISTS (SELECT 1 FROM animeentity WHERE malId = :id)")
+    fun exists(id: Int): Flow<Boolean>
 }

@@ -83,4 +83,6 @@ class AnimeRepositoryImpl @Inject constructor(private val myAnimeListApi: MyAnim
     override suspend fun deleteAnime(animeEntity: AnimeEntity) {
         animeDao.deleteAnime(animeEntity)
     }
+
+    override suspend fun exist(id: Int): Flow<Boolean> = animeDao.exists(id)
 }

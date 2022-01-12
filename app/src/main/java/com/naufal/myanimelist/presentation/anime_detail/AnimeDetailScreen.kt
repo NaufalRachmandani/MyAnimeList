@@ -1,6 +1,5 @@
 package com.naufal.myanimelist.presentation.anime_detail
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -8,8 +7,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,34 +18,31 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.naufal.core.domain.model.anime.Anime
 import com.naufal.core.domain.model.anime.Genre
 import com.naufal.myanimelist.R
 import com.naufal.myanimelist.ui.theme.*
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
 
+@Destination
 @Composable
 fun AnimeDetailScreen(
-    navController: NavController,
-    malId: Int = 0,
-    title: String = "",
-    viewModel: AnimeDetailViewModel = hiltViewModel()
+    navigator: DestinationsNavigator,
+    animeDetailViewModel: AnimeDetailViewModel = hiltViewModel(),
+    anime: Anime
 ) {
-    val state = viewModel.state.value
+    val state = animeDetailViewModel.state.value
     val context = LocalContext.current
-
-    LaunchedEffect(key1 = Unit) {
-        viewModel.getAnime(malId.toString())
-    }
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
-                        text = title,
+                        text = anime.title ?: "Unknown Title",
                         color = Color.White,
                         style = toolbarTextStyle,
                         overflow = TextOverflow.Ellipsis
@@ -56,46 +52,42 @@ fun AnimeDetailScreen(
                 contentColor = Color.White,
                 elevation = 12.dp,
                 actions = {
-                    Icon(
-                        modifier = Modifier
-                            .padding(end = 16.dp)
-                            .clickable {
-
-                            },
-                        imageVector = Icons.Default.Favorite,
-                        contentDescription = "favorite",
-                        tint = Color.White
-                    )
+                    if (state.isFavorite) {
+                        Icon(
+                            modifier = Modifier
+                                .padding(end = 16.dp)
+                                .clickable {
+                                    animeDetailViewModel.insertAnime(anime = state.anime)
+                                },
+                            imageVector = Icons.Default.Favorite,
+                            contentDescription = "favorite",
+                            tint = Color.White
+                        )
+                    } else {
+                        Icon(
+                            modifier = Modifier
+                                .padding(end = 16.dp)
+                                .clickable {
+                                    animeDetailViewModel.deleteAnime(anime = state.anime)
+                                },
+                            imageVector = Icons.Default.FavoriteBorder,
+                            contentDescription = "favorite border",
+                            tint = Color.White
+                        )
+                    }
                 },
                 navigationIcon = {
-                    if (navController.previousBackStackEntry != null) {
-                        IconButton(onClick = { navController.navigateUp() }) {
-                            Icon(
-                                imageVector = Icons.Filled.ArrowBack,
-                                contentDescription = "Back",
-                                tint = Color.White
-                            )
-                        }
+                    IconButton(onClick = { navigator.navigateUp() }) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color.White
+                        )
                     }
                 }
             )
         }, content = {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
-                InitiateUI(anime = state.anime)
-                if (state.error.isNotBlank()) {
-                    Toast.makeText(
-                        context,
-                        state.error,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                if (state.isLoading) {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                }
-            }
+            InitiateUI(anime = state.anime)
         })
 }
 
@@ -133,8 +125,6 @@ fun InitiateUI(anime: Anime = Anime(), isPreview: Boolean = false) {
             synopsis = anime.synopsis
         )
         Spacer(modifier = Modifier.height(16.dp))
-        //characters section
-
     }
 }
 

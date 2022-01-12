@@ -15,16 +15,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import com.naufal.myanimelist.presentation.Screen
 import com.naufal.myanimelist.presentation.components.AnimeList
 import com.naufal.myanimelist.presentation.components.SearchBar
+import com.naufal.myanimelist.presentation.destinations.AnimeDetailScreenDestination
 import com.naufal.myanimelist.ui.theme.MyAnimeListTheme
 import com.naufal.myanimelist.ui.theme.Primary
 import com.naufal.myanimelist.ui.theme.PrimaryLight
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
+@Destination(start = true)
 @Composable
-fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(navigator: DestinationsNavigator, viewModel: HomeViewModel = hiltViewModel()) {
     val state = viewModel.state.value
     val context = LocalContext.current
     Box(modifier = Modifier.fillMaxSize()) {
@@ -41,7 +43,11 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
                 onFavoriteClick = {}
             )
             AnimeList(list = state.topAnimeList) {
-                navController.navigate(Screen.AnimeDetailScreen.route + "/${it.malId}/${it.title}")
+                navigator.navigate(
+                    AnimeDetailScreenDestination(
+                        anime = it
+                    )
+                )
             }
         }
         if (state.error.isNotBlank()) {
