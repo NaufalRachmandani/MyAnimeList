@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,6 +40,10 @@ fun AnimeDetailScreen(
 ) {
     val state = animeDetailViewModel.state.value
     val favoriteState = animeDetailViewModel.favoriteState.value
+
+    LaunchedEffect(key1 = Unit) {
+        animeDetailViewModel.isInFavorite(anime.malId ?: 0)
+    }
 
     Scaffold(
         topBar = {
