@@ -1,8 +1,11 @@
 package com.naufal.myanimelist.presentation.anime_detail
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -35,7 +38,7 @@ fun AnimeDetailScreen(
     anime: Anime
 ) {
     val state = animeDetailViewModel.state.value
-    val context = LocalContext.current
+    val favoriteState = animeDetailViewModel.favoriteState.value
 
     Scaffold(
         topBar = {
@@ -52,12 +55,12 @@ fun AnimeDetailScreen(
                 contentColor = Color.White,
                 elevation = 12.dp,
                 actions = {
-                    if (state.isFavorite) {
+                    if (favoriteState.isFavorite) {
                         Icon(
                             modifier = Modifier
                                 .padding(end = 16.dp)
                                 .clickable {
-                                    animeDetailViewModel.insertAnime(anime = state.anime)
+                                    animeDetailViewModel.deleteAnime(anime)
                                 },
                             imageVector = Icons.Default.Favorite,
                             contentDescription = "favorite",
@@ -68,7 +71,7 @@ fun AnimeDetailScreen(
                             modifier = Modifier
                                 .padding(end = 16.dp)
                                 .clickable {
-                                    animeDetailViewModel.deleteAnime(anime = state.anime)
+                                    animeDetailViewModel.insertAnime(anime)
                                 },
                             imageVector = Icons.Default.FavoriteBorder,
                             contentDescription = "favorite border",
@@ -87,15 +90,17 @@ fun AnimeDetailScreen(
                 }
             )
         }, content = {
-            InitiateUI(anime = state.anime)
+            InitiateUI(anime = anime, state = state)
         })
 }
 
 @Composable
-fun InitiateUI(anime: Anime = Anime(), isPreview: Boolean = false) {
+fun InitiateUI(anime: Anime = Anime(), isPreview: Boolean = false, state: AnimeDetailScreenState) {
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .background(color = Color.White)
             .padding(4.dp),
         horizontalAlignment = Alignment.Start,
@@ -125,6 +130,29 @@ fun InitiateUI(anime: Anime = Anime(), isPreview: Boolean = false) {
             synopsis = anime.synopsis
         )
         Spacer(modifier = Modifier.height(16.dp))
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .background(Primary)
+        ) {
+            DescSection(
+                source = anime.source,
+                rating = anime.rating,
+                listGenre = anime.genres,
+                synopsis = anime.synopsis
+            )
+            if (state.message.isNotBlank()) {
+                Toast.makeText(
+                    context,
+                    state.message,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            if (state.isLoading) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
+        }
     }
 }
 
@@ -343,7 +371,7 @@ fun DefaultPreview() {
                     }
                 )
             }, content = {
-                InitiateUI(anime = Anime(), isPreview = true)
+                InitiateUI(anime = Anime(), isPreview = true, state = AnimeDetailScreenState())
             })
     }
 }

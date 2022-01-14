@@ -1,6 +1,5 @@
 package com.naufal.core.data.source.remote
 
-import com.naufal.core.data.source.remote.model.anime.AnimeResponse
 import com.naufal.core.data.source.remote.model.anime_characters.AnimeCharactersResponse
 import com.naufal.core.data.source.remote.model.anime_list.AnimeListResponse
 import retrofit2.http.GET
@@ -11,9 +10,6 @@ interface MyAnimeListApi {
 
     @GET("top/anime")
     suspend fun getAnimeTop(@Query("page") page: Int): AnimeListResponse
-
-    @GET("anime/{id}")
-    suspend fun getAnime(@Path("id") id: String): AnimeResponse
 
     @GET("anime/{id}/characters")
     suspend fun getAnimeCharacters(@Path("id") id: String): AnimeCharactersResponse

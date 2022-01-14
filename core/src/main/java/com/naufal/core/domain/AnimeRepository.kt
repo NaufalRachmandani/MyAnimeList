@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface AnimeRepository {
     suspend fun getAnimeTop(): Flow<Resource<List<Anime>>>
-    suspend fun getAnime(id: String): Flow<Resource<Anime>>
     suspend fun getAnimeCharacters(id: String): Flow<Resource<List<CharacterData>>>
     suspend fun getAnimeSearch(q: String, type: String): Flow<Resource<List<Anime>>>
     suspend fun getAnimeFavorite(): Flow<List<AnimeEntity>>
