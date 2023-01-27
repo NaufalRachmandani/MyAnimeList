@@ -4,6 +4,17 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/MyAnimeList.iml" filepath="$PROJECT_DIR$/.idea/modules/MyAnimeList.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MyAnimeList.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MyAnimeList.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MyAnimeList.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MyAnimeList.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MyAnimeList.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MyAnimeList.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MyAnimeList.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MyAnimeList.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/MyAnimeList.core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/MyAnimeList.core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/MyAnimeList.core.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/core/MyAnimeList.core.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/MyAnimeList.core.main.iml" filepath="$PROJECT_DIR$/.idea/modules/core/MyAnimeList.core.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/MyAnimeList.core.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/core/MyAnimeList.core.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/favorite/MyAnimeList.favorite.iml" filepath="$PROJECT_DIR$/.idea/modules/favorite/MyAnimeList.favorite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/favorite/MyAnimeList.favorite.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/favorite/MyAnimeList.favorite.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/favorite/MyAnimeList.favorite.main.iml" filepath="$PROJECT_DIR$/.idea/modules/favorite/MyAnimeList.favorite.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/favorite/MyAnimeList.favorite.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/favorite/MyAnimeList.favorite.unitTest.iml" />
     </modules>
   </component>
 </project>

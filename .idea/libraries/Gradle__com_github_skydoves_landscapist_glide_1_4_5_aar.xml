@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.skydoves:landscapist-glide:1.4.5@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/db9f79f53f9fe9fa5162e4799345038f/transformed/landscapist-glide-1.4.5/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/db9f79f53f9fe9fa5162e4799345038f/transformed/landscapist-glide-1.4.5/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.skydoves/landscapist-glide/1.4.5/995a1beeba6ccb903fc656e4927a7adb2a72a295/landscapist-glide-1.4.5-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.skydoves/landscapist-glide/1.4.5/f0426254bbd4af066e5abd5fce4a2779f1f24f63/landscapist-glide-1.4.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
